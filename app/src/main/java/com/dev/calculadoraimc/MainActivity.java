@@ -28,9 +28,11 @@ public class MainActivity extends AppCompatActivity {
         valorImc = findViewById(R.id.valorImc);
     }
 
-    public Double calculoImc(Double peso, Double altura) {
+    public Double calculoImc(String cPeso, String cAltura) {
+        Double valorPeso = Double.parseDouble(cPeso);
+        Double valorAltura = Double.parseDouble(cAltura);
         Double imc;
-        imc = (peso / (altura * altura));
+        imc = (valorPeso / (valorAltura * valorAltura));
         imc = Math.floor(imc * 100) / 100;
         if (imc < 17.0) {
             img_resultado.setImageResource(R.drawable.imc_17);
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
     public Boolean validacao(String cPeso, String cAltura) {
         Boolean validador = true;
-        if (cPeso.equals("") || cAltura.equals("")) {
+        if (cPeso.equals("") || cAltura.equals("") || (cPeso == null) || (cAltura == null)) {
             validador = false;
         }
         return validador;
@@ -75,12 +77,10 @@ public class MainActivity extends AppCompatActivity {
     public void onCalcular(View view) {
         String cPeso = txt_peso.getText().toString();
         String cAltura = txt_altura.getText().toString();
-        Double valorPeso = Double.parseDouble(cPeso);
-        Double valorAltura = Double.parseDouble(cAltura);
         Boolean validador = validacao(cPeso, cAltura);
 
         if (validador) {
-            calculoImc(valorPeso, valorAltura);
+            calculoImc(cPeso, cAltura);
         } else {
             Toast.makeText(this, "Insira peso e altura válidos", Toast.LENGTH_SHORT).show();
         }
